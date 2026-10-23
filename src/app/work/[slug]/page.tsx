@@ -104,6 +104,38 @@ export default async function ProjectPage({ params }: PageProps) {
           ) : null}
         </div>
 
+        {project.gallery?.length ? (
+          <section aria-labelledby="screens-heading" className="mt-8">
+            <h2
+              className="text-h3 font-semibold text-ink"
+              id="screens-heading"
+            >
+              Screens
+            </h2>
+            <div className="mt-4 space-y-6">
+              {project.gallery.map((shot) => (
+                <figure key={shot.src}>
+                  <div className="overflow-hidden rounded-card border border-line bg-surface">
+                    <Image
+                      alt={shot.alt}
+                      className="h-auto w-full"
+                      height={shot.height}
+                      sizes="(min-width: 1248px) 1152px, 100vw"
+                      // Already sized and compressed WebP; see the cover above.
+                      src={shot.src}
+                      unoptimized
+                      width={shot.width}
+                    />
+                  </div>
+                  <figcaption className="mt-2 text-meta text-ink-muted">
+                    {shot.caption}
+                  </figcaption>
+                </figure>
+              ))}
+            </div>
+          </section>
+        ) : null}
+
         <div className="mt-8 flex max-w-measure flex-wrap gap-2 border-t border-line pt-6">
           {project.links.live ? (
             <Button external href={project.links.live}>

@@ -142,7 +142,7 @@ export const sectionCopy = {
   },
   work: {
     eyebrow: "Selected work",
-    heading: "Four problems, and what I did about them.",
+    heading: "Real problems, and what I did about them.",
     intro:
       "Case studies drawn from the roles above. Each one is the honest version: what was hard, what I built, what it changed.",
   },

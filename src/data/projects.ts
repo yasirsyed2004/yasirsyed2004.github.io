@@ -16,6 +16,15 @@ export type ProjectLinks = {
   caseStudy?: string;
 };
 
+/** A screenshot on the case-study page. Dimensions are the file's own. */
+export type ProjectShot = {
+  src: string;
+  alt: string;
+  caption: string;
+  width: number;
+  height: number;
+};
+
 export type Project = {
   slug: string;
   title: string;
@@ -33,33 +42,145 @@ export type Project = {
   links: ProjectLinks;
   /** Path under /public. */
   cover: string;
+  /** Optional screens, shown on the case-study page under the write-up. */
+  gallery?: ProjectShot[];
 };
 
 export const projects: Project[] = [
   {
-    slug: "echooo-ai-platform",
-    title: "AI features for an influencer marketing platform",
+    slug: "echooo-dashboard",
+    title: "Echooo.AI influencer campaign platform",
     role: "Full Stack Developer, Echooo.AI",
     period: "May 2025 — Present",
     summary:
-      "AI-driven features built end to end: FastAPI services on the backend, Next.js and React on the front, and a typed contract holding the two together.",
+      "A multi-role SaaS platform that runs influencer campaigns end to end — creator discovery, outreach, content approval, payments and results analytics — for agencies, brands and creators.",
     problem:
-      "An AI feature is easy to demo and hard to ship. Model calls are slow, occasionally wrong, and never free — and none of that is allowed to leak into the interface. On a platform people run their working day on, a feature that hangs for eight seconds is not a feature.",
+      "Influencer campaigns are usually run across spreadsheets, direct messages, email threads and screenshots of insights. Finding creators whose audience matches the brief, contacting them at scale, approving their content, paying them and proving the result each happen in a different tool, and the data never connects. Brands cannot see what their budget delivered, and agencies cannot grow past the number of conversations their team can keep track of.",
     approach:
-      "The backend is Python and FastAPI with typed request and response models, so the frontend works against a contract rather than a guess. LLM and third-party AI APIs sit behind service boundaries — the UI talks to our API, never to a provider directly — which keeps prompt changes, retries and provider swaps out of the client entirely. PostgreSQL holds the state those models read and write. Performance work is continuous rather than a phase at the end: API paths and database queries get profiled and tightened as real usage patterns show up, not when someone complains. Features go from spec to release with product and design in the room rather than over a wall.",
+      "The campaign is the unit of work, and it moves through one pipeline: Discover, Outreach, Content, Result and Payment. The Next.js frontend uses role-scoped parallel routes, so agency teams, brand clients, creators and internal operations each get their own workspace from a single codebase. Behind it is a FastAPI service on PostgreSQL (SQLAlchemy with Alembic migrations), with Redis-backed background jobs and WebSockets for real-time chat and notifications. Discovery combines live search across social platforms with demographic and audience filters; shortlists roll up reach, engagement, creator tiers and audience location; the results view reports views, engagement rate and cost per view, broken down by content theme and length. LLM providers — OpenAI, Gemini and Claude — sit behind a service layer that powers brief parsing and campaign insights, alongside electronic contracts, creator payments, a Shopify affiliate integration and an MCP connector that lets AI assistants work with an account. As a full-stack developer on the team, I build features end to end across the frontend and the API.",
     impact:
-      "TODO: replace with a real metric — e.g. p95 latency on the AI path before/after, feature adoption, or cost per request.",
+      "In production at dashboard.echooo.ai, serving agency teams, brand clients and creators across Pakistan, the UAE and the wider MENA region.",
     stack: [
-      "Python",
-      "FastAPI",
       "Next.js",
       "React",
       "TypeScript",
+      "Tailwind CSS",
+      "TanStack Query",
+      "Python",
+      "FastAPI",
       "PostgreSQL",
-      "REST APIs",
+      "Redis",
+      "WebSockets",
+      "LLM APIs",
+      "Docker",
+      "Google Cloud",
     ],
-    links: { caseStudy: "/work/echooo-ai-platform" },
-    cover: "/covers/echooo-ai-platform.svg",
+    links: {
+      live: "https://dashboard.echooo.ai",
+      caseStudy: "/work/echooo-dashboard",
+    },
+    cover: "/covers/echooo-dashboard.webp",
+    gallery: [
+      {
+        src: "/work/echooo-dashboard/campaigns.webp",
+        alt: "Campaign board showing each campaign's market, dates and pipeline counts",
+        caption:
+          "Campaign board — every campaign's market, dates and pipeline from discovered to onboarded. Budgets redacted.",
+        width: 1893,
+        height: 875,
+      },
+      {
+        src: "/work/echooo-dashboard/discovery.webp",
+        alt: "Creator discovery table with demographic filters for location, gender and age",
+        caption:
+          "Discovery — creator search with audience and demographic filters.",
+        width: 1896,
+        height: 874,
+      },
+      {
+        src: "/work/echooo-dashboard/shortlist.webp",
+        alt: "Shortlist overview with total reach, creator tier composition and top locations",
+        caption:
+          "Shortlist — combined reach, engagement, creator tiers and audience location before outreach begins.",
+        width: 1896,
+        height: 878,
+      },
+      {
+        src: "/work/echooo-dashboard/profile-analytics.webp",
+        alt: "Creator profile analytics with performance trend, top countries and audience gender",
+        caption:
+          "Profile analytics — follower trend, audience countries and audience gender and age for a single creator.",
+        width: 1896,
+        height: 590,
+      },
+      {
+        src: "/work/echooo-dashboard/results.webp",
+        alt: "Campaign results analytics with views, engagement, insights and breakdown charts",
+        caption:
+          "Results — campaign views, engagement and automated insights, broken down by theme and content length. Cost per view redacted.",
+        width: 1890,
+        height: 873,
+      },
+    ],
+  },
+  {
+    slug: "echooo-website",
+    title: "Echooo.ai marketing website",
+    role: "Full Stack Developer, Echooo.AI",
+    period: "2026",
+    summary:
+      "The public website for Echooo.ai — product storytelling, solution pages for each customer segment, pricing, creator sign-up and demo booking, in light and dark themes.",
+    problem:
+      "An AI-native platform is hard to explain in one headline. Echooo has four autonomous agents, two discovery modes and customers ranging from small brands to enterprises, agencies and government — plus creators, a second audience with entirely different goals. The site had to make the product legible to each of them and turn interest into either a booked demo or a creator sign-up.",
+    approach:
+      "Built with the Next.js App Router and Tailwind CSS. The product is shown rather than described: the home page uses working interface mock-ups of the real dashboard — campaign board, shortlist and agent panels, labelled as illustrative data — instead of stock imagery. Each customer segment has its own solution page, pricing compares plans with a monthly and yearly toggle, and the creators page funnels straight into dashboard registration. Demo booking, a light and dark theme, JSON-LD structured data, generated Open Graph images, and the legal pages that platform integrations require (privacy, terms, refunds and data deletion) are all part of the build, along with documentation for the Echooo AI connector.",
+    impact:
+      "Live at echooo.ai as the front door to the platform — the route by which brands book demos and creators register on the dashboard.",
+    stack: [
+      "Next.js",
+      "React",
+      "Tailwind CSS",
+      "JSON-LD",
+      "Open Graph",
+      "Light & dark themes",
+    ],
+    links: {
+      live: "https://echooo.ai",
+      caseStudy: "/work/echooo-website",
+    },
+    cover: "/covers/echooo-website.webp",
+    gallery: [
+      {
+        src: "/work/echooo-website/home.webp",
+        alt: "Echooo.ai home page hero with an interactive campaign board mock-up",
+        caption:
+          "Home — the headline beside a live mock-up of the campaign board.",
+        width: 1920,
+        height: 1200,
+      },
+      {
+        src: "/work/echooo-website/agencies.webp",
+        alt: "Agencies solution page with the headline One platform. All your clients.",
+        caption: "Solution pages — one per customer segment.",
+        width: 1920,
+        height: 1200,
+      },
+      {
+        src: "/work/echooo-website/pricing.webp",
+        alt: "Pricing page comparing five plans with a monthly and yearly toggle",
+        caption: "Pricing — five plans with a monthly and yearly toggle.",
+        width: 1920,
+        height: 1200,
+      },
+      {
+        src: "/work/echooo-website/creators.webp",
+        alt: "Creators page with a sign-up call to action and a sample campaign brief",
+        caption:
+          "For creators — a separate funnel into dashboard registration.",
+        width: 1920,
+        height: 1200,
+      },
+    ],
   },
   {
     slug: "university-systems",
@@ -134,6 +255,15 @@ export const projects: Project[] = [
   //     caseStudy: "/work/project-slug",
   //   },
   //   cover: "/covers/project-slug.svg",
+  //   gallery: [                            // optional; omit for no screens
+  //     {
+  //       src: "/work/project-slug/screen.webp",
+  //       alt: "What the screen shows",
+  //       caption: "One line under the image.",
+  //       width: 1920,                      // the file's real pixel size
+  //       height: 1200,
+  //     },
+  //   ],
   // },
   // ---------------------------------------------------------------------------
 ];

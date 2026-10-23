@@ -74,6 +74,10 @@ page, a sitemap entry and metadata — no component changes.
 Cards degrade: omit `links.live` or `links.repo` and that button disappears
 rather than rendering a dead link.
 
+Covers can be SVG or raster (the Echooo covers are WebP). An optional `gallery`
+of screenshots renders under the write-up on the case-study page; put the
+files in `public/work/<slug>/` and give each its real pixel size.
+
 ---
 
 ## Design tokens
