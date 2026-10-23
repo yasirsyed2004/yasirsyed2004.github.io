@@ -183,21 +183,69 @@ export const projects: Project[] = [
     ],
   },
   {
-    slug: "university-systems",
-    title: "Student portals and an LMS, built in-house",
-    role: "Software Developer, University of South Asia",
-    period: "Mar 2022 — Jan 2025",
+    slug: "iehsas-lms",
+    title: "IEHSAS learning management system",
+    role: "Full-Stack Developer, IEHSAS",
+    period: "Jul 2025 — Jun 2026",
     summary:
-      "Three years building the internal systems a university actually runs on — student information portals and learning management platforms.",
+      "A learning management system for the Institute of Engineering, Health Sciences and Applied Sciences — proctored online entry tests, enrolment, courses, and an internal task and reporting module for staff.",
     problem:
-      "A university's records don't live in one place. Enrolment, results, attendance and course material each arrive in their own format, usually downstream of a spreadsheet, and every department is certain its exception is the important one. A student information system that can't absorb that gets worked around within a term, and then it's just another spreadsheet.",
+      "Admission at a technical institute starts with an entry test, and running it in person limits who can apply and how quickly. Moving it online raises a harder question: a test that can be answered from another tab, or by someone else, measures nothing. After the test, enrolment moves through documents, verification and course selection — usually on paper and over email — while the staff processing it need visibility into their own workload.",
     approach:
-      "Built the portals and the LMS in-house rather than bending an off-the-shelf product around a structure it was never designed for: React on the front against REST APIs, PHP behind them, and a data model shaped for the migrations that were still coming rather than only the ones already done. The unglamorous half was most of the work — authentication, real role boundaries between students, faculty and administration, and importing years of existing records without quietly losing any of them. It ran concurrently with a client-facing role at PlanLab, which is an effective way to find out how much scope you can actually carry.",
+      "Built on Laravel 12 with MySQL, server-rendered Blade views and role-based access through Spatie Permission for administrators, staff and students. Candidates move from a test introduction to registration — one attempt per CNIC or passport — to a timed test proctored in the browser: camera and microphone are required, face-api.js checks that a face stays in frame, periodic webcam snapshots are stored against the attempt, and tab switches or leaving fullscreen are recorded as violations with escalating warnings before auto-submission. Administrators manage a question bank of multiple-choice and true/false questions with marks and ordering, review each attempt with its snapshots, and grant retakes individually. Passing candidates continue into enrolment with document upload, approval and generated PDF enrolment forms, then into courses organised by category, module and lesson with progress tracking and reviews. A separate staff module covers departments, tasks with comments, attachments, progress logs, reviews and an audit trail, shareable read-only task links, and daily activity reports with monthly PDF and Excel exports.",
     impact:
-      "TODO: replace with a real metric — e.g. students or staff on the system, records migrated, or manual hours removed per term.",
-    stack: ["React.js", "PHP", "REST APIs", "GitHub"],
-    links: { caseStudy: "/work/university-systems" },
-    cover: "/covers/university-systems.svg",
+      "Live at lms.batakhe.com, running the institute's online entry tests, enrolment and staff reporting.",
+    stack: [
+      "Laravel 12",
+      "PHP",
+      "MySQL",
+      "Blade",
+      "Bootstrap 5",
+      "Alpine.js",
+      "Spatie Permission",
+      "face-api.js",
+      "DomPDF",
+      "Laravel Excel",
+    ],
+    links: {
+      live: "https://lms.batakhe.com",
+      caseStudy: "/work/iehsas-lms",
+    },
+    cover: "/covers/iehsas-lms.webp",
+    gallery: [
+      {
+        src: "/work/iehsas-lms/entry-test.webp",
+        alt: "Entry test introduction showing duration, question count, passing score and proctoring instructions",
+        caption:
+          "Entry test — the rules up front: duration, passing score, one attempt per CNIC, and what proctoring requires.",
+        width: 1920,
+        height: 1070,
+      },
+      {
+        src: "/work/iehsas-lms/registration.webp",
+        alt: "Student registration form with course selection and identity fields",
+        caption:
+          "Registration — course selection and identity details before the test unlocks.",
+        width: 1792,
+        height: 1140,
+      },
+      {
+        src: "/work/iehsas-lms/question-bank.webp",
+        alt: "Admin question bank listing questions with type, options, marks and order",
+        caption:
+          "Question bank — multiple-choice and true/false questions with marks and ordering, filterable by test.",
+        width: 1891,
+        height: 876,
+      },
+      {
+        src: "/work/iehsas-lms/attempts.webp",
+        alt: "Admin attempt statistics: total attempts, completed, passed and average score",
+        caption:
+          "Attempt overview — completion, pass count and average score at a glance.",
+        width: 1893,
+        height: 348,
+      },
+    ],
   },
   {
     slug: "planlab-client-platforms",
