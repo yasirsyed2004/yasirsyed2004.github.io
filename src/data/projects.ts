@@ -265,21 +265,71 @@ export const projects: Project[] = [
     cover: "/covers/planlab-client-platforms.svg",
   },
   {
-    slug: "gsm-home-automation",
-    title: "GSM home automation",
-    role: "Final year project, University of Gujrat",
-    period: "2018",
+    slug: "iehsas-website",
+    title: "IEHSAS corporate website",
+    role: "Web Developer, IEHSAS",
+    period: "2025",
     summary:
-      "Control household appliances from a mobile phone over GSM — the final year project of a software engineering degree, built with Python.",
+      "The public website for IEHSAS, a health, safety and environment training and consultancy firm — a WordPress site with a WooCommerce course catalogue, service pages, accreditations and certificate verification.",
     problem:
-      "Home automation in 2018 assumed a house with reliable broadband and an occupant with an app store account. Plenty of houses had neither. Almost every one of them had a phone that could send a text message.",
+      "An HSE training and consultancy firm sells two very different things: accredited qualifications such as NEBOSH, OSHA, OTHM and NFPA to individuals, and consultancy, inspection and auditing services to companies. Each visitor arrives looking for something specific — a course, a fee, proof of accreditation, an office nearby — and the site has to answer before they move on. The content never stops growing: new courses, new service lines and new articles, most of them added by staff rather than a developer.",
     approach:
-      "Used GSM as the transport instead of the internet: a phone sends a command, a GSM module receives it, and a Python control layer interprets it and switches the appliance. The interesting constraints were the unglamorous ones — parsing instructions off an unreliable channel, deciding what 'fail safe' means when a message arrives garbled or twice, and reporting the state of a physical switch back through a medium that can only answer in text.",
+      "Built on WordPress with the Academia education theme, Elementor and WPBakery for page layouts, and Slider Revolution for the home page hero. Courses are WooCommerce products — 24 courses across eight categories, each with duration, level and an apply action — so staff can add and update the catalogue without code. A mega menu organises six service families (assessment, OH&S layouts, QHSE manuals, ISO consultancy, inspection and personnel secondment) and every qualification route into dedicated pages: more than 370 pages and a blog of over 160 articles, with XML sitemaps and Google Site Kit supporting search visibility and analytics. Enquiries come in through Contact Form 7, an online enrolment form and WhatsApp click-to-chat, while accreditation and client pages, certificate verification, and office details for Lahore, Islamabad, Karachi and the UK carry the trust signals a safety-training buyer looks for.",
     impact:
-      "TODO: replace with something concrete — e.g. number of appliances controlled, command round-trip time, or the grade it earned.",
-    stack: ["Python", "GSM", "Embedded I/O"],
-    links: { caseStudy: "/work/gsm-home-automation" },
-    cover: "/covers/gsm-home-automation.svg",
+      "Live at iehsas.com — more than 370 pages, 160 articles and a 24-course catalogue, managed day to day by the IEHSAS team.",
+    stack: [
+      "WordPress",
+      "WooCommerce",
+      "Elementor",
+      "WPBakery",
+      "Slider Revolution",
+      "Contact Form 7",
+      "SEO",
+    ],
+    links: {
+      live: "https://www.iehsas.com",
+      caseStudy: "/work/iehsas-website",
+    },
+    cover: "/covers/iehsas-website.webp",
+    gallery: [
+      {
+        src: "/work/iehsas-website/home.webp",
+        alt: "IEHSAS home page hero with the headline Welcome To IEHSAS and an Enroll Now button",
+        caption:
+          "Home — the hero, mega-menu navigation and the firm's positioning.",
+        width: 1920,
+        height: 1200,
+      },
+      {
+        src: "/work/iehsas-website/services.webp",
+        alt: "Six service cards: accredited qualification, third-party trainings, auditing, consultancy, inspection and personnel secondment",
+        caption: "What We Offer — the six service families at a glance.",
+        width: 1920,
+        height: 1105,
+      },
+      {
+        src: "/work/iehsas-website/programs.webp",
+        alt: "Popular programmes grid with NEBOSH IGC, Train the Trainer and OTHM qualifications",
+        caption: "Popular programmes — the flagship qualifications.",
+        width: 1920,
+        height: 1200,
+      },
+      {
+        src: "/work/iehsas-website/courses.webp",
+        alt: "WooCommerce course catalogue with course cards and a course category sidebar",
+        caption:
+          "Course catalogue — WooCommerce products filtered by category, maintained by staff.",
+        width: 1920,
+        height: 1200,
+      },
+      {
+        src: "/work/iehsas-website/clients.webp",
+        alt: "Our Valuable Clients page with a grid of client company logos",
+        caption: "Clients — the trust signals a corporate buyer looks for.",
+        width: 1920,
+        height: 1200,
+      },
+    ],
   },
 
   // ---------------------------------------------------------------------------
