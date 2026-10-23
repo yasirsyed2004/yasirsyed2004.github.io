@@ -1,0 +1,274 @@
+@import "tailwindcss";
+
+/* `light:` targets the light theme. Dark is the default and needs no variant:
+   it is what renders with no `data-theme` at all, including with JS off. */
+@custom-variant light (&:where([data-theme="light"], [data-theme="light"] *));
+
+/* ---------------------------------------------------------------------------
+   Design tokens. Everything the site is allowed to look like is defined here
+   once and consumed as Tailwind utilities. No component invents a raw value.
+
+   SPACING: `--spacing` is redefined to 8px, so *every* spacing-derived utility
+   lands on the 8px grid by construction — `p-1` is 8px, `p-2` is 16px,
+   `gap-3` is 24px, and so on. There is no way to write a 5px gap by accident.
+   Read spacing numbers as "multiples of 8", not as Tailwind's default 4.
+--------------------------------------------------------------------------- */
+
+@theme {
+  --spacing: 0.5rem;
+
+  /* Surfaces — near-black, never pure #000, so shadows and grain have room. */
+  --color-base: #08090b;
+  --color-surface: #0e1014;
+  --color-surface-raised: #14171d;
+  --color-line: #1d222b;
+  --color-line-strong: #2b323d;
+
+  /* Text */
+  --color-ink: #eef1f6;
+  --color-ink-muted: #9aa4b2;
+  --color-ink-faint: #8a94a3;
+
+  /* One accent hue. Blue. No purple, no pink, no gradient duos. */
+  --color-accent: #4c8dff;
+  --color-accent-strong: #2f6fe4;
+  --color-accent-dim: #16233a;
+  --color-on-accent: #05101f;
+
+  /* Type */
+  --font-display: var(--font-display-face), "Space Grotesk", ui-sans-serif,
+    system-ui, sans-serif;
+  --font-sans: var(--font-body-face), "Inter", ui-sans-serif, system-ui,
+    -apple-system, "Segoe UI", sans-serif;
+
+  --text-display: clamp(2.75rem, 8.5vw, 7rem);
+  --text-display--line-height: 0.94;
+  --text-display--letter-spacing: -0.045em;
+
+  --text-h2: clamp(2rem, 4.5vw, 3.5rem);
+  --text-h2--line-height: 1.02;
+  --text-h2--letter-spacing: -0.035em;
+
+  --text-h3: clamp(1.25rem, 2vw, 1.625rem);
+  --text-h3--line-height: 1.2;
+  --text-h3--letter-spacing: -0.02em;
+
+  --text-lead: clamp(1.125rem, 1.6vw, 1.5rem);
+  --text-lead--line-height: 1.45;
+  --text-lead--letter-spacing: -0.011em;
+
+  --text-body: 1rem;
+  --text-body--line-height: 1.7;
+
+  --text-meta: 0.8125rem;
+  --text-meta--line-height: 1.4;
+  --text-meta--letter-spacing: 0.02em;
+
+  --text-eyebrow: 0.75rem;
+  --text-eyebrow--line-height: 1;
+  --text-eyebrow--letter-spacing: 0.16em;
+
+  /* Layout rhythm — all multiples of 8. */
+  --spacing-gutter: 3rem;
+  --spacing-section: 11rem;
+  --spacing-section-sm: 7rem;
+
+  --container-measure: 44rem;
+  --container-shell: 78rem;
+
+  --radius-card: 1rem;
+  --radius-pill: 999px;
+
+  --ease-out-soft: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* --------------------------------------------------------------------------- */
+
+/* ---------------------------------------------------------------------------
+   Light theme.
+
+   Only the colour tokens change; every utility already reads them through
+   `var()`, so no component needs a light-specific class. Same single blue
+   hue, darkened until it clears AA as text on a light ground. Ratios are in
+   the README next to the dark set.
+
+   `data-theme` is set before first paint by the inline script in the root
+   layout. Without it the document stays dark.
+--------------------------------------------------------------------------- */
+
+@layer base {
+  :root[data-theme="light"] {
+    --color-base: #f5f7fa;
+    --color-surface: #ffffff;
+    --color-surface-raised: #edf0f5;
+    --color-line: #e1e5eb;
+    --color-line-strong: #c9d0da;
+
+    --color-ink: #0b0e14;
+    --color-ink-muted: #465060;
+    --color-ink-faint: #5b6575;
+
+    --color-accent: #1f5fd6;
+    --color-accent-strong: #184db0;
+    --color-accent-dim: #dbe6fb;
+    --color-on-accent: #ffffff;
+
+    color-scheme: light;
+  }
+
+  /* Applied for the single frame of a theme swap, so every surface changes
+     together instead of the ones with `transition-colors` lagging behind. */
+  .theme-switching,
+  .theme-switching *,
+  .theme-switching *::before,
+  .theme-switching *::after {
+    transition: none !important;
+  }
+}
+
+@layer base {
+  html {
+    background-color: var(--color-base);
+    color-scheme: dark;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--color-base);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: var(--text-body);
+    line-height: 1.7;
+    text-rendering: optimizeLegibility;
+    overflow-x: clip;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  /* One visible focus treatment, everywhere, keyboard-only. */
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  ::selection {
+    background-color: var(--color-accent);
+    color: var(--color-on-accent);
+  }
+
+}
+
+/* ---------------------------------------------------------------------------
+   Progressive enhancement guard.
+
+   Content is server-rendered and fully readable with zero JavaScript. Any
+   "hidden until animated" state is applied *only* once the client marks the
+   document with `.js-enabled`, so a failed GSAP load can never leave a section
+   stuck at opacity 0. Reduced-motion opts out of the guard entirely.
+--------------------------------------------------------------------------- */
+
+@layer utilities {
+  .js-enabled [data-reveal] {
+    opacity: 0;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .js-enabled [data-reveal] {
+      opacity: 1;
+    }
+  }
+
+  /* Fine film grain over the dark ground — kills banding on gradients. */
+  .grain::after {
+    content: "";
+    position: absolute;
+    inset: -50%;
+    background-image: var(--grain-image);
+    opacity: 0.32;
+    pointer-events: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Fixed header condense.
+
+   The header box is a fixed height. What condenses is the backdrop: it fades
+   in and scales down from its top edge while the content row translates up to
+   stay centred inside it. Transform and opacity only — no animated padding, no
+   height transition, no layout work. The class is toggled by a single
+   ScrollTrigger in Header.tsx.
+--------------------------------------------------------------------------- */
+
+@layer components {
+  [data-header] {
+    --header-shift: -8px;
+    --header-squash: 0.78;
+    --header-ease: cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  @media (min-width: 768px) {
+    [data-header] {
+      --header-shift: -14px;
+      --header-squash: 0.68;
+    }
+  }
+
+  [data-header-backdrop] {
+    opacity: 0;
+    transform-origin: top center;
+    transition:
+      opacity 380ms var(--header-ease),
+      transform 380ms var(--header-ease);
+  }
+
+  [data-header-row] {
+    transition: transform 380ms var(--header-ease);
+  }
+
+  [data-header-mark] {
+    display: inline-block;
+    transform-origin: left center;
+    transition:
+      transform 380ms var(--header-ease),
+      color 200ms ease-out;
+  }
+
+  [data-header].is-condensed [data-header-backdrop] {
+    opacity: 1;
+    transform: scaleY(var(--header-squash));
+  }
+
+  [data-header].is-condensed [data-header-row] {
+    transform: translateY(var(--header-shift));
+  }
+
+  [data-header].is-condensed [data-header-mark] {
+    transform: scale(0.88);
+  }
+}
