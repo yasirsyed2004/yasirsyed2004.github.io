@@ -248,21 +248,65 @@ export const projects: Project[] = [
     ],
   },
   {
-    slug: "planlab-client-platforms",
-    title: "Client web platforms at PlanLab Solutions",
-    role: "Web Developer, PlanLab Solutions",
-    period: "Nov 2020 — Jan 2025",
+    slug: "iehsas-hrm",
+    title: "IEHSAS HR management platform",
+    role: "Deployment & customisation, IEHSAS",
+    period: "Feb 2026",
     summary:
-      "Four years taking client web platforms from brief to production, held alongside the university role.",
+      "A multi-tenant HR platform for IEHSAS built on HRMGo, a commercial Laravel HR SaaS — deployed, branded and locked down as a private internal tool with separate super admin, company and HR workspaces.",
     problem:
-      "Agency work is a stream of one-off builds: different clients, different scopes, the same deadline. Every project is tempted to reinvent authentication, admin and deployment from scratch, and every project that gives in pays for it in month three, when somebody else has to pick it up.",
+      "IEHSAS needed one place to run staff administration — employees, payroll, timesheets, performance, training and recruitment — without commissioning a bespoke system. HR software is well-understood territory, and building it from scratch would have meant months of work on features that mature products already do well. The job was to choose a solid product and fit it to the organisation cleanly, including the parts it should not expose.",
     approach:
-      "Built client platforms in TypeScript against REST APIs, leaning on convention rather than cleverness so a handover stayed legible to whoever inherited it. The habit that came out of four years of it: decide early which parts are genuinely bespoke to this client and which are last quarter's problem wearing a new logo — and only build the first kind twice. Most of those years overlapped with the university role, which is its own lesson in what a schedule will actually hold.",
+      "Chose HRMGo, a multi-tenant HR SaaS on Laravel 11, rather than building from scratch, and deployed it at hrm.batakhe.com with its three tiers configured: a super admin layer for companies, plans, email templates and system settings; company workspaces covering staff, employees, payroll, timesheets, performance, finance, assets, documents, policies and meetings; and an HR role for day-to-day administration. IEHSAS branding — dark and light logos and the favicon — is applied through the platform's brand settings. Out of the box the product ships as a public SaaS storefront, so I changed the routing to send the root URL straight to the login page and pointed the landing-page navigation there too, turning it into a private tool for one organisation rather than a sign-up site.",
     impact:
-      "TODO: this role has no description on LinkedIn either — add the clients or sectors you can name, what you built for them, and one number.",
-    stack: ["TypeScript", "REST APIs", "GitHub"],
-    links: { caseStudy: "/work/planlab-client-platforms" },
-    cover: "/covers/planlab-client-platforms.svg",
+      "Live at hrm.batakhe.com as IEHSAS's internal HR system, delivered as a configured product in days rather than a bespoke build over months.",
+    stack: [
+      "HRMGo",
+      "Laravel 11",
+      "PHP",
+      "MySQL",
+      "Multi-tenant SaaS",
+      "Role-based access",
+    ],
+    links: {
+      live: "https://hrm.batakhe.com/login",
+      caseStudy: "/work/iehsas-hrm",
+    },
+    cover: "/covers/iehsas-hrm.webp",
+    gallery: [
+      {
+        src: "/work/iehsas-hrm/super-admin.webp",
+        alt: "Super admin dashboard with paid users, total order amount and most purchased plan",
+        caption:
+          "Super admin — companies, plans and orders across the whole platform.",
+        width: 1894,
+        height: 885,
+      },
+      {
+        src: "/work/iehsas-hrm/brand-settings.webp",
+        alt: "Brand settings page showing the IEHSAS dark logo, light logo and favicon",
+        caption:
+          "Brand settings — IEHSAS logos and favicon applied across the platform.",
+        width: 1893,
+        height: 876,
+      },
+      {
+        src: "/work/iehsas-hrm/company-dashboard.webp",
+        alt: "Company dashboard with staff, tickets, account balance and jobs totals",
+        caption:
+          "Company workspace — staff, payroll, timesheets, performance and finance in one place.",
+        width: 1894,
+        height: 875,
+      },
+      {
+        src: "/work/iehsas-hrm/hr-dashboard.webp",
+        alt: "HR dashboard with the profile menu open and the HR navigation sidebar",
+        caption:
+          "HR role — day-to-day administration with its own scoped navigation.",
+        width: 1887,
+        height: 878,
+      },
+    ],
   },
   {
     slug: "iehsas-website",
