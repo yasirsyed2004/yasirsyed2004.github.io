@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { ScrollTrigger, useGSAP } from "@/lib/gsap";
 import { navigation, profile } from "@/data/profile";
+import { MobileNav } from "./MobileNav";
 import { ThemeToggle } from "./ThemeToggle";
 
 /**
@@ -68,7 +69,9 @@ export function Header() {
               {navigation.map((item) => (
                 <li key={item.href}>
                   <a
-                    className="text-meta text-ink-muted transition-colors hover:text-ink"
+                    // Inline vertical padding widens the touch area (tablets)
+                    // without moving the line.
+                    className="py-1 text-meta text-ink-muted transition-colors hover:text-ink"
                     href={item.href}
                   >
                     {item.label}
@@ -79,10 +82,16 @@ export function Header() {
           </nav>
 
           <div className="flex items-center gap-1">
-            <ThemeToggle />
-            <Button download href={profile.cv} size="sm" variant="secondary">
-              CV
-            </Button>
+            {/* 40px on phones to match the menu button; 36px beside CV. */}
+            <ThemeToggle className="max-md:size-5" />
+            {/* Below md the CV link lives in the menu panel, which keeps the
+                row from crowding at 320px. */}
+            <div className="hidden md:block">
+              <Button download href={profile.cv} size="sm" variant="secondary">
+                CV
+              </Button>
+            </div>
+            <MobileNav />
           </div>
         </Container>
       </div>

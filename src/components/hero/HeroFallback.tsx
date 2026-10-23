@@ -42,7 +42,10 @@ export function HeroFallback({ rings = true }: HeroFallbackProps) {
       />
 
       {rings ? (
-        <div className="absolute top-1/2 right-[8%] -translate-y-1/2 md:right-[14%]">
+        // On narrow screens the text column is the full width, so a vertically
+        // centred core would sit on the subhead. Below md the composition
+        // drops into the empty space under the CTAs instead.
+        <div className="absolute top-[88%] right-[10%] -translate-y-1/2 md:top-1/2 md:right-[14%]">
           {[26, 40, 54, 68].map((size, index) => (
             <div
               className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-accent"

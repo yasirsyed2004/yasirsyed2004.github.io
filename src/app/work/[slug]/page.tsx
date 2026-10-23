@@ -53,7 +53,7 @@ export default async function ProjectPage({ params }: PageProps) {
     <article className="pt-14 pb-section-sm md:pb-section">
       <Container>
         <Link
-          className="text-meta text-ink-muted transition-colors hover:text-accent"
+          className="py-1 text-meta text-ink-muted transition-colors hover:text-accent"
           href="/#work"
         >
           ← All work

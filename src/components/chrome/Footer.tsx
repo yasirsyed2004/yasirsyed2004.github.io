@@ -24,7 +24,8 @@ export function Footer() {
             {socialLinks.map((link) => (
               <li key={link.label}>
                 <a
-                  className="text-meta text-ink-muted transition-colors hover:text-accent"
+                  // Inline padding: a bigger touch target, same line box.
+                  className="py-1 text-meta text-ink-muted transition-colors hover:text-accent"
                   href={link.href}
                   {...(link.href.startsWith("http")
                     ? { rel: "noopener noreferrer", target: "_blank" }

@@ -8,8 +8,10 @@ import { TagList } from "@/components/ui/Tag";
 import type { Project } from "@/data/projects";
 import { isDev, isTodo } from "@/lib/utils";
 
+// The padding/negative-margin pair grows the touch target without moving
+// anything: these are flex items, so plain padding would add height.
 const linkClasses =
-  "text-meta font-medium text-ink-muted transition-colors hover:text-accent";
+  "-my-1 py-1 text-meta font-medium text-ink-muted transition-colors hover:text-accent";
 
 /** Fast enough to read as feedback rather than as an animation. */
 const spring = { type: "spring", stiffness: 320, damping: 30, mass: 0.6 } as const;
